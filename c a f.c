@@ -8,7 +8,7 @@ main(){
 
     printf("Por favor introduce tus grados\n");
     scanf("%f",&c);
-    printf("Tus grados a F son : %.2f \n", 9/5*c+32);
+    printf("Tus grados a F son : %.2f \n", (1.8*c)+32);
 
     system("pause");
     return(0);
