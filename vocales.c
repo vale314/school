@@ -8,10 +8,9 @@ main(){
 
     if(c == 'a')
         printf("es un vocal");
-    else
-        if(c == 'e')
+        else
+    if(c == 'e')
         printf("es un vocal");
-
         else
     if(c == 'i')
         printf("es un vocal");
@@ -37,7 +36,8 @@ main(){
     if(c ==  'U')
         printf("es un vocal");
         else
-        printf("No Es Un Caracter");
+        printf("No Es Una Vocal");
 
     getch();
+    return(0);
 }
