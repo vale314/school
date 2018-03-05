@@ -84,7 +84,7 @@ main(){
                             scanf("%d",&n);
                             i=0;
                             do{
-                                printf("%d ",i);
+                                printf("%d\n ",i);
                                 i++;
                             }while(i<=n);
                             printf("\n\n\n");
