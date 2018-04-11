@@ -3,11 +3,11 @@
 #include <conio.h>
 
 main(){
-    int op,x, num=-1;
+    int op, x, num=-1, op1, valor;
     int v[5];
     do{
         printf("\nVECTOR 1X1\n");
-        printf("\n 1.CAPTURAR\n 2.MOSTRAR\n 3.SALIR\n SELECCIONA UNA OPCION:");
+        printf("\n 1.CAPTURAR\n 2.MOSTRAR\n 3.ELIMINAR\n 4.SALIR\n SELECCIONA UNA OPCION:");
         scanf("%d",&op);
         switch(op){
             case 1:
@@ -30,12 +30,78 @@ main(){
                         printf("\n %d",v[x]);
             break;
             case 3:
+                do{
+                    system("cls");
+                    printf("\n 1.Primiero\n 2.Ultimo\n 3.Valor\n 4.Regresar\n SELECCIONA UNA OPCION:");
+                    scanf("%d",&op1);
+                    switch(op1){
+                        case 1:
+                            if(num==-1){
+                                printf("\n LISTA VACIA\n");
+                                getch();
+                            }
+
+                            for(x=0;x<=num;x++){
+                                v[x]=v[x+1];
+                                if(x==num){
+                                    v[x]=NULL;
+                                    num--;
+                                    break;
+                                }
+                            }
+                        break;
+                        case 2:
+                            if(num==-1){
+                                printf("\n LISTA VACIA\n");
+                                getch();
+                                break;
+                            }
+                             for(x=0;x<=num;x++){
+                                if(x==num){
+                                    v[x]=NULL;
+                                    num--;
+                                    break;
+                                }
+                            }
+                        break;
+                        case 3:
+                            if(num==-1){
+                                printf("\n LISTA VACIA\n");
+                                getch();
+                                break;
+                            }
+
+                             printf("Valor A Buscar\n");
+                             scanf("%d",&valor);
+                             for(x=0;x<=num;x++){
+                                if(x==num){
+                                    v[x]=NULL;
+                                    num--;
+                                    break;
+                                }
+                                if(v[x] == valor){
+                                    do{
+                                        v[x]= v[x+1];
+                                        x++;
+                                    }while(x<num);
+                                    num--;
+                                    break;
+                                }
+                            }
+                        break;
+                        case 4:
+
+                        break;
+                    }
+                }while(op1 != 4);
+            break;
+            case 4:
                 printf("\n\n FIN DEL PROGRAMA\n");
             break;
             default:
                 printf("\n Dato incorrecto\n");
         }
-    }while(op != 3);
+    }while(op != 4);
     getch();
 
 }
