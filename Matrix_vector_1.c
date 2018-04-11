@@ -3,7 +3,7 @@
 #include <conio.h>
 
 main(){
-    int op, x, num=-1, op1, valor;
+    int op, x, num=-1, op1, valor, b,n;
     int v[5];
     do{
         printf("\nVECTOR 1X1\n");
@@ -31,6 +31,7 @@ main(){
             break;
             case 3:
                 do{
+                    n=0;
                     system("cls");
                     printf("\n 1.Primiero\n 2.Ultimo\n 3.Valor\n 4.Regresar\n SELECCIONA UNA OPCION:");
                     scanf("%d",&op1);
@@ -74,20 +75,41 @@ main(){
                              printf("Valor A Buscar\n");
                              scanf("%d",&valor);
                              for(x=0;x<=num;x++){
-                                if(x==num){
-                                    v[x]=NULL;
-                                    num--;
-                                    break;
+                                if(x==num && v[x] == valor){
+                                    n=0;
+                                    printf("El Numero %d Fue encontrado en [%d]\n",valor,x);
+                                    printf("Desea Eliminarlo 1-Si\n");
+                                    scanf("%d",&b);
+                                    if( b == 1){
+                                        v[x]=NULL;
+                                        num--;
+                                        break;
+                                    }else
+                                        break;
+
                                 }
                                 if(v[x] == valor){
-                                    do{
-                                        v[x]= v[x+1];
-                                        x++;
-                                    }while(x<num);
-                                    num--;
+                                    n=0;
+                                    printf("El Numero %d Fue encontrado en [%d]\n",valor,x);
+                                    printf("Desea Eliminarlo 1-Si\n");
+                                    scanf("%d",&b);
+                                    if( b == 1){
+                                            do{
+                                                v[x]= v[x+1];
+                                                x++;
+                                            }while(x<num);
+                                        num--;
+                                        break;
+                                    }else
                                     break;
                                 }
+                                n=1;
                             }
+                            if(n){
+                                printf("NO ENCONTRADO\n");
+                                getch();
+                            }
+
                         break;
                         case 4:
 
