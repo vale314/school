@@ -32,7 +32,7 @@ void deleteUser();
 void reportes();
 void menuUser();
 void showUser();
-
+void generetePass();
 
 void productosM();
 void ventaP();
@@ -142,10 +142,22 @@ void nuevoUser(){
     fflush(stdin);
     gets(users[cUsers].usuario);
     fflush(stdin);
-    printf("Password: ");
-    scanf("%d",&users[cUsers].password);
+    generetePass();
+    printf("Password: %s",users[cUsers].password);
+    system("pause");
     cUsers++;
     return;
+}
+
+void generetePass(){
+    char r[tam];
+    int i;
+     for(i=0;i<tam;i++){
+                r[i]='\0';
+            }
+    strncat(users[cUsers].password, users[cUsers].apellidoP, 2);
+    strncat(users[cUsers].password, users[cUsers].nombre, 1);
+    toupper(users[cUsers].password);
 }
 void showUser(){
 }
