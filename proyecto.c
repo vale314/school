@@ -17,10 +17,10 @@ struct a{
 
 
 int login();
-int loginUser(char user[50], int passG);
+int loginUser(char[50], int);
 void end();
 void gerente();
-int compare(char n[50], char n3[50]);
+int compare(char [50], char [50]);
 int loginU(char [50],int);
 void menuG();
 void nuevoUser();
