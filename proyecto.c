@@ -9,9 +9,10 @@ struct a{
     char apellidoP[20];
     char apellidoM[20];
     char area[20];
-    int usuario[20];
+    char usuario[20];
     char password[20];
-    int id;
+    char ide[20];
+    char id[20];
 }users[tam];
 
 
@@ -24,17 +25,19 @@ int compare(char [50], char [50]);
 int loginU(char [50],char[50]);
 void menuG();
 void nuevoUser();
-void showUser();
-void searchUserId();
-void searchUserA();
-void modificarUser();
+void showUsers();
+void searchUserId(int *,int *);
+void searchUserA(int *uI,int *e);
+void modificarUN(int id);
+void modificarUP(int id);
 void deleteUser();
 void reportes();
 void menuUser();
-void showUser();
 void generetePass();
 void toupeerF(char *);
 void removeArray(char *p,int num);
+void removeE(char *p,int num);
+void showUser(int);
 
 void productosM();
 void ventaP();
@@ -93,7 +96,7 @@ int loginU(char user[50],char pasG[50]){
     int i, result, n;
 
     for(i=0;i<=cUsers;i++){
-        result= compare(user,users[i].nombre);
+        result= compare(user,users[i].usuario);
         if(result && compare(pasG,users[i].password)){
             return 2;
         }
@@ -131,10 +134,8 @@ void gerente(){
 void nuevoUser(){
 
     printf("\tAgreagar Un Empleado\n");
-    printf("IDEmpleado: ");
-    fflush(stdin);
-    scanf("%d",&users[cUsers].id);
-    printf("\nNombre: ");
+
+    printf("Nombre: ");
     fflush(stdin);
     gets(users[cUsers].nombre);
     printf("\nApellido Paterno: ");
@@ -151,7 +152,10 @@ void nuevoUser(){
     gets(users[cUsers].usuario);
     fflush(stdin);
     generetePass();
-    printf("Password: %s\n",users[cUsers].password);
+    printf("\nIDEmpleado:");
+    fflush(stdin);
+    gets(users[cUsers].ide);
+    printf("\nPassword: %s\n",users[cUsers].password);
     system("pause");
     cUsers++;
     return;
@@ -161,10 +165,9 @@ void generetePass(){
     char r[tam];
     int i;
     char num[20];
-    for(i=0;i<tam;i++){
-        users[cUsers].password[i]='\0';
-        r[i]='\0';
-    }
+    removeE(users[cUsers].password,20);
+    removeE(r,20);
+
     strncat(r, users[cUsers].apellidoP, 2);
     strncat(r, users[cUsers].nombre, 1);
     toupeerF(&r[0]);
@@ -177,6 +180,15 @@ void generetePass(){
         numberIdC++;
     }
 }
+
+void removeE(char *p,int num){
+    int i;
+    for(i=0;i<20;i++){
+        *p='\0';
+        p++;
+    }
+}
+
 
 void removeArray(char *p,int num){
     int i;
@@ -216,13 +228,93 @@ int comparePass(char r[20]){
                 return(0);
 
 }
-void showUser(){
+void showUsers(){
+    int i;
+    printf("\t\tUsuarios\n");
+    if(cUsers){
+        for(i=0;i<cUsers;i++){
+            printf("Nombre: %s\n",users[i].nombre);
+            printf("Apellido Paterno: %s\n",users[i].apellidoP);
+            printf("Apellido Materno: %s\n",users[i].apellidoM);
+            printf("Area: %s\n",users[i].area);
+            printf("Usuario: %s\n",users[i].usuario);
+            printf("Password: %s\n",users[i].password);
+            printf("Id: %s\n",users[i].ide);
+        }
+    }
+    else
+        printf("\tInesistentes\n");
+    getch();
 }
-void searchUserId(){
+void searchUserId(int *uI,int *e){
+    int i,u=1;
+    char id[20];
+    printf("Ingrese el Id a buscar\n");
+    fflush(stdin);
+    gets(id);
+    for(i=0;i<=cUsers;i++){
+        if(compare(users[i].ide,id)){
+           u=1;
+           break;
+        }
+        else
+           u=0;
+    }
+    if(u){
+        *uI=i;
+        *e=1;
+    }
+    else{
+        printf("Usuario No Existe\n");
+        *e=0;
+        system("pause");
+    }
 }
-void searchUserA(){
+
+void showUser(int num){
+    printf("Nombre: %s\n",users[num].nombre);
+    printf("Apellido Paterno: %s\n",users[num].apellidoP);
+    printf("Apellido Materno: %s\n",users[num].apellidoM);
+    printf("Area: %s\n",users[num].area);
+    printf("Usuario: %s\n",users[num].usuario);
+    printf("Password: %s\n",users[num].password);
+    printf("Id: %s\n",users[num].ide);
+    system("pause");
 }
-void modificarUser(){
+
+void searchUserA(int *uI,int *e){
+    int i,u=1;
+    char a[20];
+    printf("Ingrese el Apellido\n");
+    fflush(stdin);
+    gets(a);
+    for(i=0;i<=cUsers;i++){
+        if(compare(users[i].apellidoP,a)){
+           u=1;
+           break;
+        }
+        else
+           u=0;
+    }
+    if(u){
+        *uI=i;
+        *e=1;
+    }
+    else{
+        printf("Usuario No Existe\n");
+        *e=0;
+        system("pause");
+    }
+}
+void modificarUN(int id){
+    printf("\nNombre: \n");
+    fflush(stdin);
+    gets(users[id].nombre);
+}
+void modificarUP(int id){
+    printf("\Password: \n");
+    fflush(stdin);
+    gets(users[id].password);
 }
 void deleteUser(){
 }
@@ -231,8 +323,9 @@ void reportes(){
 
 void menuG(){
 
-    int m;
+    int m,m5,id,u;
     do{
+        u=0;
         system("cls");
         printf("1. Nuevo\n2. Mostrar Todos\n3. Buscar por codigo\n4. Buscar Por Apellido Paterno\n5. Modificar\n6. Eliminar por IDEmpleado\n7. Reportes\n8. Cambiar Usuario\n");
         scanf("%d",&m);
@@ -241,16 +334,40 @@ void menuG(){
                 nuevoUser();
             break;
             case 2:
-                showUser();
+                showUsers();
             break;
             case 3:
-                searchUserId();
+                searchUserId(&id,&u);
+                if(u)
+                    showUser(id);
             break;
             case 4:
-                searchUserA();
+                searchUserA(&id,&u);
+                if(u)
+                    showUser(id);
+
             break;
             case 5:
-                modificarUser();
+                do{
+                    printf("\n1. Nombre\n2. Contrasena\n3. Regresar\n");
+                    scanf("%d",&m5);
+                    switch(m5){
+                        case 1:
+                            searchUserId(&id,&u);
+                            if(u)
+                                modificarUN(id);
+                        break;
+                        case 2:
+                            searchUserId(&id,&u);
+                            if(u)
+                                modificarUP(id);
+                        break;
+                        case 3:
+
+                        break;
+                    }
+                }while(m5 != 3);
+
             break;
             case 6:
                 deleteUser();
@@ -266,7 +383,6 @@ void menuG(){
 }
 
 void menuUser(){
-
 
     int m;
     do{
