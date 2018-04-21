@@ -279,7 +279,7 @@ void showUser(int num){
     printf("Usuario: %s\n",users[num].usuario);
     printf("Password: %s\n",users[num].password);
     printf("Id: %s\n",users[num].ide);
-    system("pause");
+    getch();
 }
 
 void searchUserA(int *uI,int *e){
@@ -303,7 +303,7 @@ void searchUserA(int *uI,int *e){
     else{
         printf("Usuario No Existe\n");
         *e=0;
-        system("pause");
+        getch();
     }
 }
 void modificarUN(int id){
@@ -316,7 +316,27 @@ void modificarUP(int id){
     fflush(stdin);
     gets(users[id].password);
 }
-void deleteUser(){
+void deleteUser(id){
+    int c,i;
+    printf("Desea Eliminar El Usuario 1-Si\n");
+    scanf("%d",&c);
+    if(c==1){
+        if(i==cUsers)
+            cUsers--;
+        if(i<cUsers){
+            for(i=id;i<cUsers;i++){
+                strcpy(users[i].nombre, users[i+1].nombre);
+                strcpy(users[i].apellidoP, users[i+1].apellidoP);
+                strcpy(users[i].apellidoM, users[i+1].apellidoM);
+                strcpy(users[i].area, users[i+1].area);
+                strcpy(users[i].usuario, users[i+1].usuario);
+                strcpy(users[i].password, users[i+1].password);
+                strcpy(users[i].ide, users[i+1].ide);
+                cUsers--;
+            }
+        }
+    }
+    getch();
 }
 void reportes(){
 }
@@ -370,7 +390,11 @@ void menuG(){
 
             break;
             case 6:
-                deleteUser();
+                searchUserId(&id,&u);
+                if(u){
+                    showUser(id);
+                    deleteUser(id);
+                }
             break;
             case 7:
                 reportes();
