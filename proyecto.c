@@ -27,7 +27,7 @@ void menuG();
 void nuevoUser();
 void showUsers();
 void searchUserId(int *,int *);
-void searchUserA(int *uI,int *e);
+void searchUserA();
 void modificarUN(int id);
 void modificarUP(int id);
 void deleteUser();
@@ -307,32 +307,30 @@ void showUser(int num){
     printf("Usuario: %s\n",users[num].usuario);
     printf("Password: %s\n",users[num].password);
     printf("Id: %s\n",users[num].ide);
-    getch();
 }
 
-void searchUserA(int *uI,int *e){
-    int i,u=1;
+void searchUserA(){
+    int i,u=0;
     char a[20];
     printf("Ingrese el Apellido\n");
     fflush(stdin);
     gets(a);
     for(i=0;i<=cUsers;i++){
         if(compare(users[i].apellidoP,a)){
-           u=1;
-           break;
+           u++;
+           showUser(i);
         }
-        else
+        if(u==0 && i !=0)
            u=0;
     }
+
     if(u){
-        *uI=i;
-        *e=1;
+      printf("\nEl Usuario Se Encontro %d",u);
     }
     else{
         printf("Usuario No Existe\n");
-        *e=0;
-        getch();
     }
+     getch();
 }
 void modificarUN(int id){
     printf("\nNombre: \n");
@@ -390,10 +388,7 @@ void menuG(){
                     showUser(id);
             break;
             case 4:
-                searchUserA(&id,&u);
-                if(u)
-                    showUser(id);
-
+                searchUserA();
             break;
             case 5:
                 do{
