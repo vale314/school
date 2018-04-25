@@ -168,7 +168,7 @@ void bP(){
         return;
     }
     for(i=0;i<=n;i++){
-        if(strcmp(producto[i].provedor , x !=0)){
+        if(strcmp(producto[i].provedor , x)==0){
             mostrarOne(i);
             y++;
         }
@@ -180,4 +180,5 @@ void bP(){
     getch();
 }
 void modificar(){
+
 }

@@ -38,6 +38,7 @@ void toupeerF(char *);
 void removeArray(char *p,int num);
 void removeE(char *p,int num);
 void showUser(int);
+int compareId(char [20]);
 
 void productosM();
 void ventaP();
@@ -132,7 +133,7 @@ void gerente(){
 }
 
 void nuevoUser(){
-
+    char r[20];
     printf("\tAgreagar Un Empleado\n");
 
     printf("Nombre: ");
@@ -152,9 +153,14 @@ void nuevoUser(){
     gets(users[cUsers].usuario);
     fflush(stdin);
     generetePass();
-    printf("\nIDEmpleado:");
-    fflush(stdin);
-    gets(users[cUsers].ide);
+
+
+    do{
+        printf("\nIDEmpleado:");
+        fflush(stdin);
+        gets(r);
+    }while(compareId(r)==1);
+    strcpy(users[cUsers].ide,r);
     printf("\nPassword: %s\n",users[cUsers].password);
     system("pause");
     cUsers++;
@@ -217,15 +223,37 @@ int comparePass(char r[20]){
      for(i=0;i<=cUsers;i++){
                  if(strcmp(users[i].password,r) == 0){
                     c=1;
+
                     break;
                  }
                  else
                     c=0;
             }
+
      if(c==1)
                 return(1);
      else
                 return(0);
+
+}
+
+int compareId(char r[20]){
+     int i,c;
+     c=0;
+     for(i=0;i<=cUsers;i++){
+                 if(strcmp(users[i].ide,r) == 0){
+                    c=1;
+                    break;
+                 }
+                 else
+                    c=0;
+            }
+            printf("%d",c);
+     if(c==1)
+                return(1);
+     else{
+                return(0);
+     }
 
 }
 void showUsers(){
