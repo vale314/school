@@ -60,8 +60,12 @@ void ventasET(int id);
 void totalV();
 void productosS();
 
-void productosM();
+void productosC();
 void ventaP();
+void busquedaP();
+void productosShowAll();
+void productosShow(int p);
+void busquedaPId();
 
 int cUsers=0;
 int numberIdC=0;
@@ -286,6 +290,7 @@ int compareId(char r[20]){
 void showUsers(){
     int i;
     printf("\t\tUsuarios\n");
+    printf("Cantidad de Usuarios: %d\n", cUsers);
     if(cUsers){
         for(i=0;i<cUsers;i++){
             printf("Nombre: %s\n",users[i].nombre);
@@ -384,8 +389,7 @@ void deleteUser(id){
     printf("Desea Eliminar El Usuario 1-Si\n");
     scanf("%d",&c);
     if(c==1){
-        if(i==cUsers)
-            cUsers--;
+        cUsers--;
         if(i<cUsers){
             for(i=id;i<cUsers;i++){
                 strcpy(users[i].nombre, users[i+1].nombre);
@@ -395,7 +399,6 @@ void deleteUser(id){
                 strcpy(users[i].usuario, users[i+1].usuario);
                 strcpy(users[i].password, users[i+1].password);
                 strcpy(users[i].ide, users[i+1].ide);
-                cUsers--;
             }
         }
     }
@@ -568,26 +571,134 @@ void menuG(){
     }while(m != 8);
 }
 
+
+void productosC(){
+
+    printf("Ingrese el Id:\n");
+    scanf("%d",&productos[cProductos].idProducto);
+    printf("Ingrese el nombre:\n");
+    fflush(stdin);
+    gets(productos[cProductos].nombre);
+    printf("Ingrese el provedor\n");
+    fflush(stdin);
+    gets(productos[cProductos].provedor);
+    printf("Ingrese el precio\n");
+    scanf("%d",&productos[cProductos].precio);
+    printf("Ingrese su cantidad\n");
+    scanf("%d",&productos[cProductos].existencia);
+
+    cProductos++;
+
+    printf("Producto registrado\n");
+    getch();
+}
+
+void productosShowAll(){
+    int i;
+    for(i=0;i<cProductos;i++){
+        printf("Id: %d\n",productos[i].idProducto);
+        printf("Nombre: %s\n",productos[i].nombre);
+        printf("Provedor %s\n",productos[i].provedor);
+        printf("Precio %d\n", productos[i].precio);
+        printf("Cantidad %d\n", productos[i].existencia);
+        printf("\n");
+    }
+    getch();
+}
+
+void productosShow(int p){
+        printf("Id: %d\n",productos[p].idProducto);
+        printf("Nombre: %s\n",productos[p].nombre);
+        printf("Provedor %s\n",productos[p].provedor);
+        printf("Precio %d\n", productos[p].precio);
+        printf("Cantidad %d\n", productos[p].existencia);
+        printf("\n");
+}
+
+void busquedaP(){
+    int i,n;
+    char p[20];
+    system("cls");
+    printf("Nombre del provedor\n");
+    fflush(stdin);
+    gets(p);
+    if(!cProductos){
+        printf("Inesistentes\n");
+        getch();
+        return;
+    }
+    n=0;
+    for(i=0;i<cProductos;i++){
+            printf("Provedor %s",productos[i].provedor);
+        if(strcmp(p,productos[i].provedor) == 0){
+            productosShow(i);
+            n=1;
+        }
+        if(n==0 && i !=0)
+           n=0;
+    }
+    if(!n)
+        printf("No Encontrado Producto\n");
+    getch();
+
+}
+
+void busquedaPId(){
+    int i,n,a1;
+    printf("Ingrese su ID:\n");
+    scanf("%d",&n);
+    if(!cProductos){
+        printf("No Se Encuentran Productos \n");
+        return;
+    }
+
+    for(i=0;i<cProductos;i++){
+        if(productos[i].idProducto==n){
+            showUser(i);
+            a1=1;
+        }
+         if(a1==0 && i !=0)
+           a1=0;
+    }
+     if(!n)
+        printf("No Encontrado Producto\n");
+    getch();
+}
+
 void menuUser(){
 
-    int m;
+    int m, m5;
     do{
         system("cls");
-        printf("1. Productos\n2. Venta\n3. Cambiar De Usuario\n");
+        printf("1. Productos\n2. Mostrar\n4. Cambiar De Usuario\n");
         scanf("%d",&m);
         switch(m){
             case 1:
-                productosM();
+                productosC();
             break;
             case 2:
-                ventaP();
+                productosShowAll();
             break;
             case 3:
+                printf("Ingrese el tipo de busqueda\n1. Provedor\n2. Por Id\n3. Salir\n");
+                scanf("%d",&m5);
+                switch(m5){
+                    case 1:
+                        busquedaP();
+                    break;
+                    case 2:
+                        busquedaPId();
+                    break;
+                    case 3:
 
+                    break;
+                }
+            break;
+            case 4:
             break;
 
         }
-    }while(m != 3);
+    }while(m != 4);
 }
 
 
