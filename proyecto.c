@@ -966,63 +966,79 @@ void factura(){
     printf("Nombre\t\tCantidad\t\tPrecio\n");
     printf("%s\t\t\t%d\t\t\%d\n\n",productos[j].nombre,detalleV[cVentas].cantidad,productos[j].precio);
     printf("\t\t\tTotal:   %d\n\n",detalleV[cVentas].cantidad*productos[j].precio);
-    printf("%s\n",ventas[cVentas].fecha);
+    printf("ID:%d\t\t\tFecha: %s\n",ventasId-1,ventas[cVentas].fecha);
 }
 
 
 void menuUser(){
 
-    int m, m5,id;;
+    int m, m5,id,m1;
     do{
         system("cls");
-        printf("1. Productos\n2. Mostrar\n3. Busqueda\n4. Modificar\n5. Eliminar\n6. Ventas\n7. Cambiar De Usuario\n");
+        printf("1. Productos\n2. Ventas\n3. Cambiar De Usuario\n");
         scanf("%d",&m);
         switch(m){
             case 1:
-                productosC();
-            break;
-            case 2:
-                productosShowAll();
-            break;
-            case 3:
                 do{
                     system("cls");
-                    printf("Ingrese el tipo de busqueda\n1. Provedor\n2. Por Id\n3. Salir\n");
-                    scanf("%d",&m5);
-                    switch(m5){
+                    printf("1. Capturar\n2. Mostrar Los Productos\n3. Busqueda De Productos\n4. Modificar Los Productos\n5. Eliminar\n6. Ir Menu Principal\n");
+                    scanf("%d",&m1);
+                    switch(m1){
                         case 1:
-                            busquedaP();
+                            productosC();
                         break;
                         case 2:
-                            busquedaPId();
-                            getch();
+                            productosShowAll();
                         break;
                         case 3:
+                            do{
+                                system("cls");
+                                printf("Ingrese el tipo de busqueda\n1. Provedor\n2. Por Id\n3. Salir\n");
+                                scanf("%d",&m5);
+                                switch(m5){
+                                    case 1:
+                                        busquedaP();
+                                    break;
+                                    case 2:
+                                        busquedaPId();
+                                        getch();
+                                    break;
+                                    case 3:
+
+                                    break;
+
+                                }
+                            }while(m5!=3);
+                        break;
+                        case 4:
+                            productosM();
+                            getch();
+                        break;
+                        case 5:
+                            removeP();
+                            getch();
+                        break;
+                        case 6:
 
                         break;
 
                     }
-                }while(m5!=3);
+
+                }while(m1!=6);
+
             break;
-            case 4:
-                productosM();
-                getch();
-            break;
-            case 5:
-                removeP();
-                getch();
-            break;
-            case 6:
+
+            case 2:
                 ventaP();
                 getch();
             break;
-            case 7:
+            case 3:
 
             break;
 
 
         }
-    }while(m != 7);
+    }while(m != 3);
 }
 
 
