@@ -1,3 +1,9 @@
+/*
+    R.O Valentin Alejandro
+    F:  21/05-/18
+    DP: Punto De Venta
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -39,7 +45,6 @@ struct d{
 int login();
 int loginUser(char[50], int);
 void end();
-void gerente();
 int compare(char [50], char [50]);
 int loginU(char [50],char[50]);
 void menuG();
@@ -47,37 +52,43 @@ void nuevoUser();
 void showUsers();
 void searchUserId(int *,int *);
 void searchUserA();
-void modificarUN(int id);
-void modificarUP(int id);
+void modificarUN(int);
+void modificarUP(int);
 void deleteUser();
 void ventasE(int);
 void menuUser();
 void generetePass();
 void toupeerF(char *);
-void removeArray(char *p,int num);
-void removeE(char *p,int num);
+void removeArray(char *,int );
+void removeE(char *,int );
 void showUser(int);
 int compareId(char [20]);
-void ventasET(int id);
+void ventasET(int);
 void totalV();
 void productosS();
+int returnPosUser(int);
+int compareUser(char [20]);
 
+void productosM();
 void productosC();
 void ventaP();
 void busquedaP();
 void productosShowAll();
-void productosShow(int p);
+void productosShow(int );
 int busquedaPId();
 int idProducto(int);
 void removeP();
 int ventaPId(int);
-
+void timeF(int);
+void factura();
+int posIdP(int);
+int ventaPC(int ,int );
 
 int cUsers=0;
 int numberIdC=0;
 int cVentas=0;
 int cProductos=0;
-int comparePass(char r[20]);
+int comparePass(char [20]);
 int ventasId=1;
 char ideGlobal[20];
 
@@ -87,12 +98,12 @@ main(){
     do{
         admin=0;
         system("cls");
-        printf("1 Iniciar\n2 Salir");
+        printf("1 Iniciar\n2 Salir\n");
         scanf("%d",&m);
         if(m==1)
            admin=login(cUsers);
         if(admin == 1)
-            gerente();
+            menuG();
         if(admin ==2)
             menuUser();
         if(admin == 3)
@@ -101,6 +112,8 @@ main(){
 
 }
 
+
+///Login From Admin
 int login(){
     char user[50];
     char pasG[50];
@@ -127,19 +140,24 @@ int login(){
         return(loginU(user,pasG));
 }
 
+///Login From Users
 int loginU(char user[50],char pasG[50]){
     int i, result, n;
-/*    if(!cUsers){
+    if(!cUsers){
             printf("Usuario Inesistente\n");
             getch();
             return 0;
-        }*/
-
+        }
+    if(user[0]=='\0' && pasG[0] =='\0'){
+        printf("Usuario Inesistente\n");
+        getch();
+        return 0;
+    }
     for(i=0;i<=cUsers;i++){
         result= compare(user,users[i].usuario);
         if(result && compare(pasG,users[i].password)){
-            return 2;
             strcpy(ideGlobal,users[i].ide);
+            return 2;
         }
         else
             n=1;
@@ -151,6 +169,7 @@ int loginU(char user[50],char pasG[50]){
         }
 }
 
+/// Comparar Cadenas Funcion
 int compare(char n[50], char n3[50]){
 
    int c = 0;
@@ -167,14 +186,11 @@ int compare(char n[50], char n3[50]){
 
 }
 
-
-void gerente(){
-    menuG();
-}
-
+///Nuevo Usuarios Crear
 void nuevoUser(){
     char r[20];
     int a=0;
+    system("cls");
     printf("\tAgreagar Un Empleado\n");
 
     printf("Nombre: ");
@@ -189,13 +205,20 @@ void nuevoUser(){
     printf("\nArea: ");
     fflush(stdin);
     gets(users[cUsers].area);
-    printf("\nusuario: ");
-    fflush(stdin);
-    gets(users[cUsers].usuario);
+    do{
+        if(a)
+            printf("Ingrese Otro Nombre De Usuario\n");
+        printf("\nusuario: ");
+        fflush(stdin);
+        gets(r);
+        a=compareUser(r);
+    }while(a);
+    strcpy(users[cUsers].usuario,r);
+
     fflush(stdin);
     generetePass();
 
-
+    a=0;
     do{
         if(a)
             printf("Ingrese Otro Numero De Usuario\n");
@@ -211,6 +234,27 @@ void nuevoUser(){
     return;
 }
 
+///Comparar Usuarios Con La BD
+int compareUser(char r[20]){
+    int i,c;
+    c=0;
+    for(i=0;i<=cUsers;i++){
+            if((strcmp(users[i].usuario,r) == 0) || (strcmp(r,"0") == 0)){
+                c=1;
+                break;
+                }
+            else
+                c=0;
+            }
+
+    if(c==1)
+        return(1);
+    else{
+        return(0);
+     }
+}
+
+///Gerenerar La Contraseña
 void generetePass(){
     char r[tam];
     int i;
@@ -231,6 +275,7 @@ void generetePass(){
     }
 }
 
+///Remover Todo De Arreglo
 void removeE(char *p,int num){
     int i;
     for(i=0;i<20;i++){
@@ -239,7 +284,7 @@ void removeE(char *p,int num){
     }
 }
 
-
+///Remover Ultimo Elemento de Arreglo
 void removeArray(char *p,int num){
     int i;
     for(i=0;i<20;i++){
@@ -251,6 +296,7 @@ void removeArray(char *p,int num){
     }
 }
 
+///Retornar En Mayusculas El ARRAY
 void toupeerF(char *p){
     int i;
     for(i=0;i<tam;i++){
@@ -260,7 +306,7 @@ void toupeerF(char *p){
 
 }
 
-
+///COMPARAR La Contraseña
 int comparePass(char r[20]){
      int i,c;
      c=0;
@@ -281,6 +327,7 @@ int comparePass(char r[20]){
 
 }
 
+/// Comprarar La Id Con  BD
 int compareId(char r[20]){
      int i,c;
      c=0;
@@ -300,10 +347,13 @@ int compareId(char r[20]){
      }
 
 }
+
+///Mostrar Todos Usuarios En BD
 void showUsers(){
     int i;
+    system("cls");
     printf("\t\tUsuarios\n");
-    printf("Cantidad de Usuarios: %d\n", cUsers);
+    printf("\nCantidad de Usuarios: %d\n\n", cUsers);
     if(cUsers){
         for(i=0;i<cUsers;i++){
             printf("Nombre: %s\n",users[i].nombre);
@@ -312,16 +362,19 @@ void showUsers(){
             printf("Area: %s\n",users[i].area);
             printf("Usuario: %s\n",users[i].usuario);
             printf("Password: %s\n",users[i].password);
-            printf("Id: %s\n",users[i].ide);
+            printf("Id: %s\n\n",users[i].ide);
         }
     }
     else
-        printf("\tInesistentes\n");
+        printf("\n\tInesistentes\n");
     getch();
 }
+
+///Buscar User Id
 void searchUserId(int *uI,int *e){
     int i,u=1;
     char id[20];
+    system("cls");
     printf("Ingrese el Id a buscar\n");
     fflush(stdin);
     gets(id);
@@ -342,26 +395,32 @@ void searchUserId(int *uI,int *e){
         *e=0;
         getch();
     }
-    getch();
+
 }
 
+///Show Only User
 void showUser(int num){
+
     printf("Nombre: %s\n",users[num].nombre);
     printf("Apellido Paterno: %s\n",users[num].apellidoP);
     printf("Apellido Materno: %s\n",users[num].apellidoM);
     printf("Area: %s\n",users[num].area);
     printf("Usuario: %s\n",users[num].usuario);
     printf("Password: %s\n",users[num].password);
-    printf("Id: %s\n",users[num].ide);
-     getch();
+    printf("Id: %s\n\n",users[num].ide);
+
 }
 
+///Buscar Por Apellido
 void searchUserA(){
     int i,u=0;
     char a[20];
-    printf("Ingrese el Apellido\n");
+    system("cls");
+    printf("\tIngrese el Apellido\n");
     fflush(stdin);
     gets(a);
+    system("cls");
+    printf("\n\n");
     for(i=0;i<=cUsers;i++){
         if(compare(users[i].apellidoP,a)){
            u++;
@@ -379,11 +438,15 @@ void searchUserA(){
     }
      getch();
 }
+
+///Modificar Usuario Nombre
 void modificarUN(int id){
     printf("\nNombre: \n");
     fflush(stdin);
     gets(users[id].nombre);
 }
+
+///Modificar Usuario Pas
 void modificarUP(int id){
     char r[20];
     int i=0;
@@ -397,6 +460,8 @@ void modificarUP(int id){
     }while(i);
     strcpy(users[id].password,r);
 }
+
+///Borrar Un Usuario
 void deleteUser(id){
     int c,i;
     printf("Desea Eliminar El Usuario 1-Si\n");
@@ -417,6 +482,8 @@ void deleteUser(id){
     }
     getch();
 }
+
+///Ventas De Empleado
 void ventasE(int id){
     int i,u=0;
     char a[20];
@@ -435,20 +502,18 @@ void ventasE(int id){
      getch();
 }
 
+/// Ventas De Empleado Totales Dinero
 void ventasET(int id){
     int i,j,k,u=0;
     char a[20];
 
     for(i=0;i<=cVentas;i++){
         if(strcmp(users[id].ide,ventas[i].ide)==0){
-            printf("%d\n",ventas[i].ide);
             for(j=0;j<=cVentas;j++){
                 if(ventas[i].idVentas==detalleV[j].idVentas){
-
                     for(k=0;k<=cProductos;k++){
                         if(detalleV[j].idProducto == productos[k].idProducto){
-
-                            u=u+productos[k].precio;
+                            u=u+(productos[k].precio*detalleV[j].cantidad);
                         }
 
                     }
@@ -464,38 +529,69 @@ void ventasET(int id){
     else{
         printf("Usuario No Vendio\n");
     }
-
+    getch();
 }
 
+///Total Vendido Dia
 void totalV(){
     int i,p,j;
+    p=0;
+    system("cls");
+    printf("\n");
     for(i=0;i<=cVentas;i++){
-            if(!cVentas)
+            if(!cVentas){
                 printf("No se encuentran ventas\n");
+                getch();
+            }
             for(j=0;j<=cProductos;j++){
                 if(detalleV[i].idProducto == productos[j].idProducto){
-                        p=productos[j].precio*detalleV[i].cantidad;
+                        p=p+productos[j].precio*detalleV[i].cantidad;
                 }
             }
     }
+    if(cVentas)
+        printf("Cantidad Total Vendido por dia %d\n",p);
+    getch();
 }
 
+/// Productos A Surtir En Cero
 void productosS(){
     int i,u;
     u=0;
+    system("cls");
+    printf("\tLos Productos Agotados \n\n\n");
     for(i=0;i<cProductos;i++){
 
         if(!productos[i].existencia){
-            printf("El Producto %s Se Encuentra Agotado\n",productos[i].nombre);
+            printf("El Producto %s Se Encuentra Agotado\n\n",productos[i].nombre);
             u++;
         }
     }
     if(!cProductos)
             printf("No se encuentran Productos Aun\n");
-    if(u)
-        printf("\nProductos Agotados %d",u);
+    if(!u && cProductos)
+        printf("\nNo Se Encuntran Productos Agotados %d",u);
     getch();
 }
+
+///Retornar Posicion  User
+int returnPosUser(id){
+    int i,u;
+    for(i=0;i<=cUsers;i++){
+        if(compare(users[i].ide,id)){
+           u=1;
+           break;
+        }
+        else
+           u=0;
+    }
+    if(u)
+        return(i);
+
+    return(0);
+
+}
+
 
 void menuG(){
 
@@ -514,8 +610,10 @@ void menuG(){
             break;
             case 3:
                 searchUserId(&id,&u);
-                if(u)
+                if(u){
                     showUser(id);
+                    getch();
+                }
             break;
             case 4:
                 searchUserA();
@@ -551,8 +649,9 @@ void menuG(){
             break;
             case 7:
                 do{
-                    printf("\n1. Cantidad de Ventas Realizadas Por Empleado\n2. Total ($)\n3. Total vendido por día\n4. Productos a Surtir\n5. Regresar");
-                    scanf("%d",&m5);
+                    system("cls");
+                    printf("\n1. Cantidad de Ventas Realizadas Por Empleado\n2. Total De Ventas Por Empleado ($)\n3. Total vendido por dia\n4. Productos a Surtir\n5. Modificar Productos Existentes\n6. Producto a capturar\n7. Mostrar Todos Los Productos\n8. Regresar");
+                    scanf("\n%d",&m5);
                     switch(m5){
                         case 1:
                             searchUserId(&id,&u);
@@ -571,10 +670,20 @@ void menuG(){
                             productosS();
                         break;
                         case 5:
+                            productosM();
+                            getch();
+                        break;
+                        case 6:
+                            productosC();
+                        break;
+                        case 7:
+                            productosShowAll();
+                        break;
+                        case 8:
 
                         break;
                     }
-                }while(m5 != 5);
+                }while(m5 != 8);
 
             break;
             case 8:
@@ -584,6 +693,7 @@ void menuG(){
     }while(m != 8);
 }
 
+///Regresar Id Producto
 int idProducto(int id){
     int i,u;
     if(id == 0)
@@ -595,12 +705,19 @@ int idProducto(int id){
     return 0;
 }
 
+///Productos
 void productosC(){
-    int id;
+    int id,e=0;
+    system("cls");
     do{
         printf("Ingrese el Id:\n");
         scanf("%d",&id);
-    }while(idProducto(id));
+        e=idProducto(id);
+
+        if(e)
+            printf("Ingrese Otro Id\n");
+
+    }while(e);
     productos[cProductos].idProducto=id;
     printf("Ingrese el nombre:\n");
     fflush(stdin);
@@ -619,8 +736,10 @@ void productosC(){
     getch();
 }
 
+/// Mostrar Todos Los Productos
 void productosShowAll(){
     int i;
+    system("cls");
     if(!cProductos)
         printf("No Se Encuentran Productos \n");
     for(i=0;i<cProductos;i++){
@@ -634,6 +753,7 @@ void productosShowAll(){
     getch();
 }
 
+///Productos Mostrar Uno
 void productosShow(int p){
         printf("Id: %d\n",productos[p].idProducto);
         printf("Nombre: %s\n",productos[p].nombre);
@@ -643,6 +763,7 @@ void productosShow(int p){
         printf("\n");
 }
 
+///Busqueda Por Provedor
 void busquedaP(){
     int i,n;
     char p[20];
@@ -670,6 +791,7 @@ void busquedaP(){
 
 }
 
+///Busqueda Por Id
 int busquedaPId(){
     int i,n,a1;
     printf("Ingrese su ID:\n");
@@ -694,7 +816,7 @@ int busquedaPId(){
 }
 
 
-
+///Productos Nodificar Funcion
 void productosM(){
     int id,m;
     id=busquedaPId();
@@ -702,6 +824,7 @@ void productosM(){
     if(id != 11000){
         printf("Desea Modificarlo 1.-Si 2.-NO\n");
         scanf("%d",&m);
+        system("cls");
         if(m==1){
             printf("Ingrese el nombre:\n");
             fflush(stdin);
@@ -719,6 +842,7 @@ void productosM(){
     }
 }
 
+///Remover Un Producto
 void removeP(){
     int id,m,i;
     id=busquedaPId();
@@ -742,6 +866,7 @@ void removeP(){
     }
 }
 
+///Venta Busqueda Producto
 int ventaPId(int id){
     int i,n,a1;
 
@@ -767,35 +892,81 @@ int ventaPId(int id){
     return(a1);
 }
 
-void timeF(char *output){
-      time_t tiempo = time(0);
-      struct tm *tlocal = localtime(&tiempo);
-      strftime(*output,128,"%d/%m/%y %H:%M:%S",tlocal);
-      printf("%s\n",*output);
+///Time
+void timeF(int i){
+    time_t tiempo = time(0);
+    struct tm *tlocal = localtime(&tiempo);
+    char output[128];
+    strftime(output,128,"%d/%m/%y %H:%M:%S",tlocal);
+    strcpy(ventas[i].fecha,output);
 }
 
+///Vneta Por Cantidad
+int ventaPC(int id,int c){
+    int i,n,a1;
+
+    for(i=0;i<cProductos;i++){
+        if(productos[i].idProducto==id){
+            if(c <= productos[i].existencia){
+                productos[i].existencia=productos[i].existencia-c;
+                return(0);
+            }
+            else{
+                printf("Productos  Maximos Existentes: %d\n",productos[i].existencia);
+                return(1);
+            }
+        }
+    }
+    return(1);
+}
+
+
 void ventaP(){
-    int id;
+    int id,c;
+    system("cls");
     printf("Producto a vender Id\n");
     scanf("%d",&id);
     if(ventaPId(id))
         return;
-    cVentas++;
-    detalleV[cVentas].idProducto=id;
     printf("Cantidad \n");
-    scanf("%d",&detalleV[cVentas].cantidad);
+    scanf("%d",&c);
+    if(ventaPC(id,c))
+        return;
+    cVentas++;
+    detalleV[cVentas].cantidad=c;
+    detalleV[cVentas].idProducto=id;
     detalleV[cVentas].idVentas=ventasId;
     ventas[cVentas].idVentas=ventasId;
     strcpy(ventas[cVentas].ide,ideGlobal);
-    timeF(ventas[cVentas].fecha);
+    timeF(cVentas);
+    ventasId++;
+    factura(id);
+}
 
-    printf("productoId: %d\n",detalleV[cVentas].idProducto);
-    printf("cantidad: %d\n",detalleV[cVentas].cantidad);
-    printf("ventaId: %d\n",detalleV[cVentas].idVentas);
+///Posiccion Id De Un Producto
+int posIdP(int id){
+    int i;
+     for(i=0;i<cProductos;i++){
+        if(productos[i].idProducto==id){
+            return(i);
+        }
+    }
+    return(0);
+}
 
-    printf("\nventaId: %d\n",ventas[cVentas].idVentas);
-    printf("ventaId: %s\n",ventas[cVentas].ideGlobal);
-    printf("ventaId: %s\n",ventas[cVentas].fecha);
+/// Mostrar La Venta
+void factura(){
+    int i,j;
+    system("cls");
+    printf("\t\tAbarrotes\n\n");
+    i=returnPosUser(ideGlobal);
+    printf("\tVenta Realizada Por:\n   ");
+    j=posIdP(detalleV[cVentas].idProducto);
+    printf("\t%s %s %s\n",users[i].nombre,users[i].apellidoP,users[i].apellidoM);
+    printf("Nombre\t\tCantidad\t\tPrecio\n");
+    printf("%s\t\t\t%d\t\t\%d\n\n",productos[j].nombre,detalleV[cVentas].cantidad,productos[j].precio);
+    printf("\t\t\tTotal:   %d\n\n",detalleV[cVentas].cantidad*productos[j].precio);
+    printf("%s\n",ventas[cVentas].fecha);
 }
 
 
