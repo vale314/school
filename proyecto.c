@@ -98,6 +98,7 @@ main(){
     do{
         admin=0;
         system("cls");
+        printf("\t\t\tBienvenido\n\n");
         printf("1 Iniciar\n2 Salir\n");
         scanf("%d",&m);
         if(m==1)
@@ -599,6 +600,7 @@ void menuG(){
     do{
         u=0;
         system("cls");
+        printf("\t\t\tPunto De Venta\n\n");
         printf("1. Nuevo\n2. Mostrar Todos\n3. Buscar por codigo\n4. Buscar Por Apellido Paterno\n5. Modificar\n6. Eliminar por IDEmpleado\n7. Reportes\n8. Cambiar Usuario\n");
         scanf("%d",&m);
         switch(m){
@@ -620,6 +622,7 @@ void menuG(){
             break;
             case 5:
                 do{
+                    printf("\t\t\tPunto De Venta\n\n");
                     printf("\n1. Nombre\n2. Contrasena\n3. Regresar\n");
                     scanf("%d",&m5);
                     switch(m5){
@@ -650,6 +653,7 @@ void menuG(){
             case 7:
                 do{
                     system("cls");
+                    printf("\t\t\tPunto De Venta\n\n");
                     printf("\n1. Cantidad de Ventas Realizadas Por Empleado\n2. Total De Ventas Por Empleado ($)\n3. Total vendido por dia\n4. Productos a Surtir\n5. Modificar Productos Existentes\n6. Producto a capturar\n7. Mostrar Todos Los Productos\n8. Regresar");
                     scanf("\n%d",&m5);
                     switch(m5){
@@ -975,12 +979,14 @@ void menuUser(){
     int m, m5,id,m1;
     do{
         system("cls");
+        printf("\t\t\tPunto De Venta\n\n");
         printf("1. Productos\n2. Ventas\n3. Cambiar De Usuario\n");
         scanf("%d",&m);
         switch(m){
             case 1:
                 do{
                     system("cls");
+                    printf("\t\t\tPunto De Venta\n\n");
                     printf("1. Capturar\n2. Mostrar Los Productos\n3. Busqueda De Productos\n4. Modificar Los Productos\n5. Eliminar\n6. Ir Menu Principal\n");
                     scanf("%d",&m1);
                     switch(m1){
@@ -993,6 +999,7 @@ void menuUser(){
                         case 3:
                             do{
                                 system("cls");
+                                printf("\t\t\tPunto De Venta\n\n");
                                 printf("Ingrese el tipo de busqueda\n1. Provedor\n2. Por Id\n3. Salir\n");
                                 scanf("%d",&m5);
                                 switch(m5){
