@@ -98,6 +98,7 @@ main(){
     do{
         admin=0;
         system("cls");
+        system("color 06");
         printf("\t\t\tBienvenido\n\n");
         printf("1 Iniciar\n2 Salir\n");
         scanf("%d",&m);
@@ -600,6 +601,7 @@ void menuG(){
     do{
         u=0;
         system("cls");
+        system("color 07");
         printf("\t\t\tPunto De Venta\n\n");
         printf("1. Nuevo\n2. Mostrar Todos\n3. Buscar por codigo\n4. Buscar Por Apellido Paterno\n5. Modificar\n6. Eliminar por IDEmpleado\n7. Reportes\n8. Cambiar Usuario\n");
         scanf("%d",&m);
@@ -979,6 +981,7 @@ void menuUser(){
     int m, m5,id,m1;
     do{
         system("cls");
+        system("color 07");
         printf("\t\t\tPunto De Venta\n\n");
         printf("1. Productos\n2. Ventas\n3. Cambiar De Usuario\n");
         scanf("%d",&m);
