@@ -878,7 +878,7 @@ int ventaPId(int id){
 
     if(!cProductos){
         printf("No Se Encuentran Productos \n");
-        return(1);
+        return(1);int i;
     }
     a1=11000;
     for(i=0;i<cProductos;i++){
@@ -976,6 +976,30 @@ void factura(){
 }
 
 
+
+void productosProv(){
+    char a[20];
+    int i,r=1,e=0;
+    system("cls");
+    printf("\nNombre De Provedor\n");
+    fflush(stdin);
+    gets(a);
+
+    for(i=0;i<cProductos;i++){
+        if(strcmp(productos[i].provedor,a)==0){
+            printf("Producto: %s Existencia %d\n",productos[i].nombre,productos[i].existencia);
+            e=productos[i].existencia+e;
+            r=0;
+        }
+    }
+    if(!e)
+        printf("\nNo encontrado Provedor o productos Agotados\n\n");
+    printf("Productos en Existencia: %d",e);
+
+    return(0);
+
+}
+
 void menuUser(){
 
     int m, m5,id,m1;
@@ -990,7 +1014,7 @@ void menuUser(){
                 do{
                     system("cls");
                     printf("\t\t\tPunto De Venta\n\n");
-                    printf("1. Capturar\n2. Mostrar Los Productos\n3. Busqueda De Productos\n4. Modificar Los Productos\n5. Eliminar\n6. Ir Menu Principal\n");
+                    printf("1. Capturar\n2. Mostrar Los Productos\n3. Busqueda De Productos\n4. Modificar Los Productos\n5. Eliminar\n6. Productos Por Provedor\n7. Ir Menu Principal\n");
                     scanf("%d",&m1);
                     switch(m1){
                         case 1:
@@ -1029,12 +1053,15 @@ void menuUser(){
                             getch();
                         break;
                         case 6:
-
+                            productosProv();
+                            getch();
+                        break;
+                        case 7:
                         break;
 
                     }
 
-                }while(m1!=6);
+                }while(m1!=7);
 
             break;
 
@@ -1050,9 +1077,3 @@ void menuUser(){
         }
     }while(m != 3);
 }
-
-
-
-
-
-
